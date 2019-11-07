@@ -1,12 +1,36 @@
 #!/bin/bash
 # Initial setup for a scratch org
 
+# Requirements:
 # set perms chmod u+x ./scripts/project_setup.sh
-# end immediately on non-zero exit codes
+
+function setUserArgs() {
+    while [[ $# > 1 ]]
+    do
+        key="$1"
+
+        case $key in
+        -e)
+            ALIAS_NAME="$2"
+            shift # past argument
+            ;;
+        -d)
+            ORG_DURATION="$2"
+            shift # past argument
+            ;;
+        *)
+            # unknown option
+            ;;
+        esac
+    shift # past argument or value
+    done
+}
+
+# Exit if there is any issue, do not continue execution
 set -e
 
-# Installs the node modules
-#npm install
+ORG_DURATION=7
+ALIAS_NAME=ebikesScratch
 
 # Authenticate against the dev hub and assign the alias "mydevhub"
 echo "Authing against dev hub. Set alias 'mydevhub'"
