@@ -1,8 +1,16 @@
 #!/bin/bash
 # Initial setup for a scratch org
 
-# Requirements:
-# set perms chmod u+x ./scripts/project_setup.sh
+###############################################################
+# REQUIREMENT
+# Set perms for script by running: chmod u+x ./scripts/init.sh
+###############################################################
+
+# Exit if there is any issue, do not continue execution
+set -e
+
+ORG_DURATION=7
+ALIAS_NAME=ebikesScratch
 
 function setUserArgs() {
     while [[ $# > 1 ]]
@@ -10,7 +18,7 @@ function setUserArgs() {
         key="$1"
 
         case $key in
-        -e)
+        -)
             ALIAS_NAME="$2"
             shift # past argument
             ;;
@@ -26,12 +34,6 @@ function setUserArgs() {
     done
 }
 
-# Exit if there is any issue, do not continue execution
-set -e
-
-ORG_DURATION=7
-ALIAS_NAME=ebikesScratch
-
 # Authenticate against the dev hub and assign the alias "mydevhub"
 echo "Authing against dev hub. Set alias 'mydevhub'"
 #sfdx force:auth:web:login -d -a mydevhub
@@ -45,7 +47,7 @@ echo "Pushing source to scratch org"
 sfdx force:source:push
 
 # Assign the ebikes perm set to the ebikesScratch org
-echo "Assigning perm set 'ebikes' to scratch org user"
+echo "Assigning perm set 'ebikes' to default scratch org user"
 sfdx force:user:permset:assign -n ebikes -u ebikesScratch2
 
 # Load sample data

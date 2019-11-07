@@ -1,0 +1,60 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+          {
+            "label": "Org Creation and Authorization",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/create_and_auth_orgs.sh",
+            "args": [
+                "--devhuborg", "${input:devhubOrgAlias}", 
+                "--scratchorg", "${input:scratchOrgAlias}", 
+                "--durationdays", "${input:orgDuration}"
+            ]
+          },
+          {
+            "label": "User Creation",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/create_users.sh",
+            "args": [
+                "-e", "${input:email}"
+            ]
+          },
+          {
+            "label": "Project Init",
+            "dependsOn": ["Org Creation and Authorization", "User Creation"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "clear": false
+            }
+          },
+    ],
+    "inputs": [
+        {
+          "id": "orgDuration",
+          "type": "promptString",
+          "description": "Org duration (days)"
+        },
+        {
+          "id": "email",
+          "type": "promptString",
+          "description": "Email address to use for users being created"
+        },
+        {
+          "id": "devhubOrgAlias",
+          "type": "promptString",
+          "description": "Devhub Org Alias"
+        },
+        {
+          "id": "scratchOrgAlias",
+          "type": "promptString",
+          "description": "Scratch Org Alias"
+        }
+    ]
+}
