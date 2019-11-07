@@ -25,6 +25,7 @@
           },
           {
             "label": "Project Init",
+            "dependsOrder": "sequence",
             "dependsOn": ["Org Creation and Authorization", "User Creation"],
             "presentation": {
                 "echo": true,
