@@ -6,39 +6,39 @@
 # Exit if there is any issue, do not continue execution
 set -e
 
-EMAIL=none
-
-# Determine the email for the new user
-function getEmailArgument() {
-    while [[ $# > 1 ]]; do
-        if ("$1" = '-e') {
-            EMAIL="$2"
-        }
-        shift   # shift $2 to $1, etc.
-    done
+function createUsers() {
+    if [ ${EMAIL} == "none" ]
+    then
+        createUsersWithoutEmail
+    else
+        createUsersWithEmail
+    fi
 }
 
-function createUsers() {
-    echo "Creating ebikes user"
-    sfdx force:user:create -f config/users/ebikes_user.json
-    echo "Creating non-ebikes user"
+function createUsersWithoutEmail() {
+    echo "Creating System Admin User"
+    sfdx force:user:create -f config/users/system_admin.json
+    echo -e "\nCreating Standard Platform User"
     sfdx force:user:create -f config/users/standard_user.json
 }
 
 function createUsersWithEmail() {
-    echo "Creating ebikes user with email address ${EMAIL}"
-    sfdx force:user:create -f config/users/ebikes_user.json email=$EMAIL
-    echo "Creating non-ebikes user with email address ${EMAIL}"
+    echo "Creating System Admin User with email address ${EMAIL}"
+    sfdx force:user:create -f config/users/system_admin.json email=$EMAIL
+    echo -e "\nCreating Standard Platform User with email address ${EMAIL}"
     sfdx force:user:create -f config/users/standard_user.json email=$EMAIL
-    echo "Resetting passwords for users. Password reset links sent to ${EMAIL}"
-    sfdx force:apex:execute -f scripts/reset_pwd.apex
+    echo -e "\nResetting passwords for users. Password reset links sent to ${EMAIL}"
+    sfdx force:apex:execute -f scripts/reset_user_password.apex
 }
 
-getEmailArgument();
-
-if [ "${EMAIL}" = "none" ]; 
-then
-    createUsers();
+if [[ "$#" -ne 2 ]]; then
+    echo "Incorrect number of parameters. Expected --email flag with value."
+    exit 2
+elif [[ "$1" == "--email" ]]; then
+    EMAIL="$2"
 else
-    createUsersWithEmail();
+    echo "Unexpected arguments. Expected --email flag with value."
+    exit 2
 fi
+
+createUsers

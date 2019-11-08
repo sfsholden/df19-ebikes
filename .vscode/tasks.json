@@ -4,29 +4,48 @@
     "version": "2.0.0",
     "tasks": [
           {
-            "label": "Org Creation and Authorization",
+            "label": "Setup Orgs",
             "type": "shell",
             "group": "build",
-            "command": "./scripts/create_and_auth_orgs.sh",
+            "command": "./scripts/setup_orgs.sh",
             "args": [
                 "--devhuborg", "${input:devhubOrgAlias}", 
                 "--scratchorg", "${input:scratchOrgAlias}", 
                 "--durationdays", "${input:orgDuration}"
-            ]
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
           },
           {
-            "label": "User Creation",
+            "label": "Initialize Scratch Org",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/init_scratch_org.sh"
+          },
+          {
+            "label": "Create Users",
             "type": "shell",
             "group": "build",
             "command": "./scripts/create_users.sh",
             "args": [
-                "-e", "${input:email}"
+                "--email", "${input:email}"
             ]
+          },
+          {
+            "label": "Load Sample Data",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/load_data.sh"
           },
           {
             "label": "Project Init",
             "dependsOrder": "sequence",
-            "dependsOn": ["Org Creation and Authorization", "User Creation"],
+            "dependsOn": ["Setup Orgs", "Initialize Scratch Org", "Create Users", "Load Sample Data"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -40,22 +59,26 @@
         {
           "id": "orgDuration",
           "type": "promptString",
-          "description": "Org duration (days)"
+          "description": "Org duration (days)",
+          "default": "7",
         },
         {
           "id": "email",
           "type": "promptString",
-          "description": "Email address to use for users being created"
+          "description": "Email address to use for users being created",
+          "default": "none"
         },
         {
           "id": "devhubOrgAlias",
           "type": "promptString",
-          "description": "Devhub Org Alias"
+          "description": "Devhub Org Alias",
+          "default": "mydevhub"
         },
         {
           "id": "scratchOrgAlias",
           "type": "promptString",
-          "description": "Scratch Org Alias"
+          "description": "Scratch Org Alias",
+          "default": "ebikesScratch"
         }
     ]
 }

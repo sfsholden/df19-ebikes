@@ -1,8 +1,9 @@
 // NOTE: Update this query if you modify the config/users/... files
-// TODO - is there a way to pass the values into this apex logic?
 try {
-  List<User> lusers = [Select Id, LastName from User where LastName = 'Ebikes' or LastName = 'Standard'];
+  List<User> lusers = [SELECT Id, LastName from User WHERE IsActive = True AND (LastName = 'SystemAdmin' OR LastName = 'StandardUser')];
 
+  User tmp = new User();
+  
   for (User usr : lusers) {
     System.resetPassword(usr.Id, true);
     System.debug('User Id: ' + usr.Id);

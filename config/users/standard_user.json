@@ -1,6 +1,6 @@
 {
-  "LastName": "Standard",
-  "Alias": "StandardUser",
+  "LastName": "StandardUser",
+  "Alias": "Standard",
   "TimeZoneSidKey": "America/Los_Angeles",
   "LocaleSidKey": "en_US",
   "EmailEncodingKey": "UTF-8",

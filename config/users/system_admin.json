@@ -1,10 +1,10 @@
 {
-    "LastName": "Ebikes",
-    "Alias": "SEbikes",
+    "LastName": "SystemAdmin",
+    "Alias": "SysAdmin",
     "TimeZoneSidKey": "America/Los_Angeles",
     "LocaleSidKey": "en_US",
     "EmailEncodingKey": "UTF-8",
     "LanguageLocaleKey": "en_US",
-    "profileName": "Standard Platform User",
+    "profileName": "System Administrator",
     "permsets": ["ebikes"]
   }
