@@ -4,6 +4,14 @@
     "version": "2.0.0",
     "tasks": [
           {
+            "label": "Install",
+            "command": "npm",
+            "type": "shell",
+            "args": ["install"],
+            "presentation": { "focus": false, "panel": "dedicated" },
+            "isBackground": false
+          },
+          {
             "label": "Setup Orgs",
             "type": "shell",
             "group": "build",
@@ -28,6 +36,10 @@
             "command": "./scripts/init_scratch_org.sh"
           },
           {
+            "label": "SFDX : Refresh SObject Definitions",
+            "command": "sfdx.force.internal.refreshsobjects"
+          },
+          {
             "label": "Create Users",
             "type": "shell",
             "group": "build",
@@ -45,7 +57,7 @@
           {
             "label": "Project Init",
             "dependsOrder": "sequence",
-            "dependsOn": ["Setup Orgs", "Initialize Scratch Org", "Create Users", "Load Sample Data"],
+            "dependsOn": ["Install", "Setup Orgs", "Initialize Scratch Org", "Create Users", "Load Sample Data"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
