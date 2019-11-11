@@ -1,9 +1,9 @@
 public with sharing class FormatDemo {
     private String name;
-private Integer number;                 public Boolean b;
+private Integer num;                 public Boolean b;
 
-    public FormatDemo(Integer number) {
-    this.number=number;
+    public FormatDemo(Integer num) {
+    this.num=num;
 }
 
 public static void doSomthing(String s){ System.debug('i did something: '+s);}
@@ -15,7 +15,7 @@ public static void doSomthing(String s){ System.debug('i did something: '+s);}
             
             for(Integer i=0;i<4;i++){
                 System.debug('hi');
-        Integer double = i*2;System.debug('double ' + double);
+        Integer twoTimes = i*2;System.debug('Two times ' + twoTimes);
 
 
 
