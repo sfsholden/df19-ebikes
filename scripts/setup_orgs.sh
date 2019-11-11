@@ -33,7 +33,7 @@ shift # past argument or value
 done
 
 echo -e "\nAuthenticating against the dev hub org with alias '${DEV_HUB_ORG_ALIAS}'"
-#sfdx force:auth:web:login -d -a ${DEV_HUB_ORG_ALIAS}
+sfdx force:auth:web:login -d -a ${DEV_HUB_ORG_ALIAS}
 
 echo -e "\nCreating the default scratch org with alias '${SCRATCH_ORG_ALIAS}' and org duration ${ORG_DURATION}"
-#sfdx force:org:create -s -d ${ORG_DURATION} -a ${SCRATCH_ORG_ALIAS} -f config/project-scratch-def.json
+sfdx force:org:create -s -d ${ORG_DURATION} -a ${SCRATCH_ORG_ALIAS} -f config/project-scratch-def.json
