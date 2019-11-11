@@ -8,7 +8,6 @@
             "command": "npm",
             "type": "shell",
             "args": ["install"],
-            "presentation": { "focus": false, "panel": "dedicated" },
             "isBackground": false
           },
           {
@@ -20,24 +19,13 @@
                 "--devhuborg", "${input:devhubOrgAlias}", 
                 "--scratchorg", "${input:scratchOrgAlias}", 
                 "--durationdays", "${input:orgDuration}"
-            ],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "new",
-                "showReuseMessage": true,
-                "clear": false
-            }
+            ]
           },
           {
             "label": "Initialize Scratch Org",
             "type": "shell",
             "group": "build",
             "command": "./scripts/init_scratch_org.sh"
-          },
-          {
-            "label": "SFDX : Refresh SObject Definitions",
-            "command": "sfdx.force.internal.refreshsobjects"
           },
           {
             "label": "Create Users",
@@ -49,15 +37,25 @@
             ]
           },
           {
+            "label": "Refresh SObject Definitions",
+            "command": "echo ${input:refreshSObjectDefinitions}",
+            "type": "shell"
+          },
+          {
             "label": "Load Sample Data",
             "type": "shell",
             "group": "build",
             "command": "./scripts/load_data.sh"
           },
           {
-            "label": "Project Init",
+            "label": "Run Tests",
+            "command": "echo ${input:runTests}",
+            "type": "shell"
+          },
+          {
+            "label": "New Project Init",
             "dependsOrder": "sequence",
-            "dependsOn": ["Install", "Setup Orgs", "Initialize Scratch Org", "Create Users", "Load Sample Data"],
+            "dependsOn": ["Setup Orgs", "Create Users", "Initialize Scratch Org", "Refresh SObject Definitions", "Load Sample Data", "Run Tests"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -91,6 +89,16 @@
           "type": "promptString",
           "description": "Scratch Org Alias",
           "default": "ebikesScratch"
+        },
+        {
+          "id": "refreshSObjectDefinitions",
+          "type": "command",
+          "command": "sfdx.force.internal.refreshsobjects"
+        },
+        {
+          "id": "runTests",
+          "type": "command",
+          "command": "sfdx.force.apex.test.run"
         }
     ]
 }
