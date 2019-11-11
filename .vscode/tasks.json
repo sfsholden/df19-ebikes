@@ -22,12 +22,6 @@
             ]
           },
           {
-            "label": "Initialize Scratch Org",
-            "type": "shell",
-            "group": "build",
-            "command": "./scripts/init_scratch_org.sh"
-          },
-          {
             "label": "Create Users",
             "type": "shell",
             "group": "build",
@@ -37,15 +31,15 @@
             ]
           },
           {
-            "label": "Refresh SObject Definitions",
-            "command": "echo ${input:refreshSObjectDefinitions}",
-            "type": "shell"
-          },
-          {
             "label": "Load Sample Data",
             "type": "shell",
             "group": "build",
             "command": "./scripts/load_data.sh"
+          },
+          {
+            "label": "Refresh SObject Definitions",
+            "command": "echo ${input:refreshSObjectDefinitions}",
+            "type": "shell"
           },
           {
             "label": "Run Tests",
@@ -55,13 +49,13 @@
           {
             "label": "New Project Init",
             "dependsOrder": "sequence",
-            "dependsOn": ["Setup Orgs", "Create Users", "Initialize Scratch Org", "Refresh SObject Definitions", "Load Sample Data", "Run Tests"],
+            "dependsOn": ["Setup Orgs", "Create Users", "Load Sample Data", "Refresh SObject Definitions", "Run Tests"],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
-                "focus": false,
+                "focus": true,
                 "panel": "new",
-                "clear": false
+                "clear": true
             }
           },
     ],
@@ -70,7 +64,7 @@
           "id": "orgDuration",
           "type": "promptString",
           "description": "Org duration (days)",
-          "default": "7",
+          "default": "1",
         },
         {
           "id": "email",
