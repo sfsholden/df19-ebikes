@@ -4,13 +4,6 @@
     "version": "2.0.0",
     "tasks": [
           {
-            "label": "Install",
-            "command": "npm",
-            "type": "shell",
-            "args": ["install"],
-            "isBackground": false
-          },
-          {
             "label": "Setup Orgs",
             "type": "shell",
             "group": "build",
@@ -61,6 +54,12 @@
     ],
     "inputs": [
         {
+          "id": "devhubOrgAlias",
+          "type": "promptString",
+          "description": "Devhub Org Alias",
+          "default": "mydevhub"
+        },
+        {
           "id": "orgDuration",
           "type": "promptString",
           "description": "Org duration (days)",
@@ -71,12 +70,6 @@
           "type": "promptString",
           "description": "Email address to use for users being created",
           "default": "none"
-        },
-        {
-          "id": "devhubOrgAlias",
-          "type": "promptString",
-          "description": "Devhub Org Alias",
-          "default": "mydevhub"
         },
         {
           "id": "scratchOrgAlias",
