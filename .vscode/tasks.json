@@ -1,0 +1,91 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+          {
+            "label": "Setup Orgs",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/setup_orgs.sh",
+            "args": [
+                "--devhuborg", "${input:devhubOrgAlias}", 
+                "--scratchorg", "${input:scratchOrgAlias}", 
+                "--durationdays", "${input:orgDuration}"
+            ]
+          },
+          {
+            "label": "Create Users",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/create_users.sh",
+            "args": [
+                "--email", "${input:email}"
+            ]
+          },
+          {
+            "label": "Load Sample Data",
+            "type": "shell",
+            "group": "build",
+            "command": "./scripts/load_data.sh"
+          },
+          {
+            "label": "Refresh SObject Definitions",
+            "command": "echo ${input:refreshSObjectDefinitions}",
+            "type": "shell"
+          },
+          {
+            "label": "Run Tests",
+            "command": "echo ${input:runTests}",
+            "type": "shell"
+          },
+          {
+            "label": "New Project Init",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Setup Orgs", "Create Users", "Load Sample Data", "Refresh SObject Definitions", "Run Tests"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "clear": true
+            }
+          },
+    ],
+    "inputs": [
+        {
+          "id": "devhubOrgAlias",
+          "type": "promptString",
+          "description": "Devhub Org Alias",
+          "default": "mydevhub"
+        },
+        {
+          "id": "orgDuration",
+          "type": "promptString",
+          "description": "Org duration (days)",
+          "default": "1",
+        },
+        {
+          "id": "email",
+          "type": "promptString",
+          "description": "Email address to use for users being created",
+          "default": "none"
+        },
+        {
+          "id": "scratchOrgAlias",
+          "type": "promptString",
+          "description": "Scratch Org Alias",
+          "default": "ebikesScratch"
+        },
+        {
+          "id": "refreshSObjectDefinitions",
+          "type": "command",
+          "command": "sfdx.force.internal.refreshsobjects"
+        },
+        {
+          "id": "runTests",
+          "type": "command",
+          "command": "sfdx.force.apex.test.run"
+        }
+    ]
+}
